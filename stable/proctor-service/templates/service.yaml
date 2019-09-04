@@ -8,9 +8,9 @@ spec:
   type: {{ .Values.service.type }}
   ports:
     - port: {{ .Values.service.port }}
-      targetPort: http
+      targetPort: proctor-service
       protocol: TCP
-      name: http
+      name: proctor-service
   selector:
     app.kubernetes.io/name: {{ include "proctor-service.name" . }}
     app.kubernetes.io/instance: {{ .Release.Name }}
