@@ -1,0 +1,39 @@
+{{- if .Values.migration.enabled }}
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: {{ template "proctor-service.fullname" . }}-migration
+  labels:
+{{ include "proctor-service.labels" . | indent 4 }}
+  {{- if .Values.migration.annotations }}
+  annotations:
+{{ toYaml .Values.migration.annotations | indent 4 }}
+  {{- end }}
+spec:
+  template:
+    spec:
+      restartPolicy: Never
+      containers:
+      - args:
+          - migrate
+        envFrom:
+        - configMapRef:
+            name: {{ template "proctor-service.name" . }}
+        name: {{ template "proctor-service.name" . }}
+        image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+        imagePullPolicy: {{ .Values.image.pullPolicy }}
+        resources:
+{{ toYaml .Values.resources | indent 12 }}
+    {{- with .Values.nodeSelector }}
+      nodeSelector:
+{{ toYaml . | indent 8 }}
+    {{- end }}
+    {{- with .Values.affinity }}
+      affinity:
+{{ toYaml . | indent 8 }}
+    {{- end }}
+    {{- with .Values.tolerations }}
+      tolerations:
+{{ toYaml . | indent 8 }}
+    {{- end }}
+{{- end }}
