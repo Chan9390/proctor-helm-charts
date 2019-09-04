@@ -36,6 +36,9 @@ spec:
             httpGet:
               path: /ping
               port: proctor-service
+          envFrom:
+            - configMapRef:
+                name: {{ template "proctor-service.name" . }}
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
       {{- with .Values.nodeSelector }}
