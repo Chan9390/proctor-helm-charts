@@ -19,8 +19,8 @@ spec:
           - migrate
         envFrom:
         - configMapRef:
-            name: {{ template "proctor-service.name" . }}
-        name: {{ template "proctor-service.name" . }}
+            name: {{ template "proctor-service.fullname" . }}
+        name: {{ template "proctor-service.fullname" . }}
         image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
         imagePullPolicy: {{ .Values.image.pullPolicy }}
         resources:
