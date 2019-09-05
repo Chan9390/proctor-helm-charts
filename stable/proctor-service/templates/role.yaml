@@ -1,0 +1,15 @@
+{{- if .Values.rbac.create }}
+apiVersion: {{ template "rbac.apiVersion" . }}
+kind: Role
+metadata:
+  name: {{ template "proctor-service.fullname" . }}
+  labels:
+{{ include "proctor-service.labels" . | indent 4 }}
+rules:
+- apiGroups: ["batch"]
+  resources: ["jobs"]
+  verbs: ["create", "list", "watch", "get"]
+- apiGroups: ["batch"]
+  resources: ["pods"]
+  verbs: ["watch", "get"]
+{{- end }}

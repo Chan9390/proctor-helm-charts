@@ -43,3 +43,25 @@ app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
 {{- end }}
 app.kubernetes.io/managed-by: {{ .Release.Service }}
 {{- end -}}
+
+{{/*
+Return the appropriate apiVersion for RBAC APIs.
+*/}}
+{{- define "rbac.apiVersion" -}}
+{{- if semverCompare "^1.8-0" .Capabilities.KubeVersion.GitVersion -}}
+"rbac.authorization.k8s.io/v1"
+{{- else -}}
+"rbac.authorization.k8s.io/v1beta1"
+{{- end -}}
+{{- end -}}
+
+{{/*
+Return the appropriate service account name
+*/}}
+{{- define "rbac.serviceAccountName" -}}
+{{- if .Values.rbac.create -}}
+{{- include "proctor-service.fullname" . -}}
+{{- else -}}
+"{{ .Values.rbac.serviceAccountName }}"
+{{- end -}}
+{{- end -}}

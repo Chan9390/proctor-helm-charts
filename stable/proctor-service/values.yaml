@@ -43,6 +43,9 @@ resources: {}
   #   cpu: 100m
   #   memory: 128Mi
 
+rbac:
+  create: true
+
 nodeSelector: {}
 
 tolerations: []
@@ -92,6 +95,6 @@ config:
   PROCTOR_JOB_POD_ANNOTATIONS: "{\"key.one\":\"true\"}"
   PROCTOR_SENTRY_DSN: "foo"
   PROCTOR_DOCS_PATH: "/path/to/docs/dir"
-  PROCTOR_AUTH_PLUGIN_BINARY: "./_output/bin/plugin/auth.so"
+  PROCTOR_AUTH_PLUGIN_BINARY: "/app/auth.so"
   PROCTOR_AUTH_PLUGIN_EXPORTED: ""
   PROCTOR_AUTH_ENABLED: "false"

@@ -1,0 +1,16 @@
+{{- if .Values.rbac.create -}}
+apiVersion: {{ template "rbac.apiVersion" . }}
+kind: RoleBinding
+metadata:
+  name: {{ template "proctor-service.fullname" . }}
+  labels:
+    app: {{ template "proctor-service.fullname" . }}
+    charts: {{ .Chart.Name }}-{{ .Chart.Version }}
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: {{ template "proctor-service.fullname" . }}
+subjects:
+- kind: ServiceAccount
+  name: {{ template "rbac.serviceAccountName" . }}
+{{- end -}}
