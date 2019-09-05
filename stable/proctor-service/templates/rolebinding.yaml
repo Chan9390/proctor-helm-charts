@@ -3,6 +3,7 @@ apiVersion: {{ template "rbac.apiVersion" . }}
 kind: RoleBinding
 metadata:
   name: {{ template "proctor-service.fullname" . }}
+  namespace: {{ .Release.Namespace }}
   labels:
     app: {{ template "proctor-service.fullname" . }}
     charts: {{ .Chart.Name }}-{{ .Chart.Version }}
@@ -13,4 +14,5 @@ roleRef:
 subjects:
 - kind: ServiceAccount
   name: {{ template "rbac.serviceAccountName" . }}
+  namespace: {{ .Release.Namespace }}
 {{- end -}}

@@ -2,6 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: {{ include "proctor-service.fullname" . }}
+  namespace: {{ .Release.Namespace }}
   labels:
 {{ include "proctor-service.labels" . | indent 4 }}
 spec:

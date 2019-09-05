@@ -3,6 +3,7 @@ apiVersion: {{ template "rbac.apiVersion" . }}
 kind: Role
 metadata:
   name: {{ template "proctor-service.fullname" . }}
+  namespace: {{ .Release.Namespace }}
   labels:
 {{ include "proctor-service.labels" . | indent 4 }}
 rules:

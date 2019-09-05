@@ -2,9 +2,9 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: {{ template "proctor-service.name" . }}
+  namespace: {{ .Release.Namespace }}
   labels:
 {{ include "proctor-service.labels" . | indent 4 }}
-  annotations:
   {{- with .Values.configmap.annotations }}
   annotations:
     {{- toYaml . | nindent 4 }}
