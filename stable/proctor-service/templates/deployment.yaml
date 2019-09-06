@@ -16,6 +16,11 @@ spec:
       labels:
         app.kubernetes.io/name: {{ include "proctor-service.name" . }}
         app.kubernetes.io/instance: {{ .Release.Name }}
+      annotations:
+        checksum/config: {{ include (print $.Template.BasePath "/configmap.yaml") . | sha256sum }}
+        {{- if .Values.pod.annotations -}}
+        {{ toYaml .Values.pod.annotations | nindent 8 }}
+        {{- end }}
     spec:
     {{- with .Values.imagePullSecrets }}
       imagePullSecrets:

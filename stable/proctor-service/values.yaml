@@ -13,6 +13,9 @@ imagePullSecrets: []
 nameOverride: ""
 fullnameOverride: ""
 
+pod:
+  annotations: {}
+
 service:
   type: ClusterIP
   port: 80
