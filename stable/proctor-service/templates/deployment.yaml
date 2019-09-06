@@ -28,7 +28,7 @@ spec:
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
             - name: proctor-service
-              containerPort: 5000
+              containerPort: {{ .Values.config.PROCTOR_APP_PORT }}
               protocol: TCP
           livenessProbe:
             httpGet:
