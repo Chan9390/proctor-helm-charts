@@ -35,14 +35,6 @@ spec:
             - name: proctor-service
               containerPort: {{ .Values.config.PROCTOR_APP_PORT }}
               protocol: TCP
-          livenessProbe:
-            httpGet:
-              path: /ping
-              port: proctor-service
-          readinessProbe:
-            httpGet:
-              path: /ping
-              port: proctor-service
           envFrom:
             - configMapRef:
                 name: {{ template "proctor-service.fullname" . }}
