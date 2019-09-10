@@ -1,0 +1,20 @@
+language: minimal
+services:
+- docker
+env:
+  global:
+  - GITHUB_ACTOR=proctorbuilder
+  - CHART_REPOSITORY=walbertus/proctor-helm-charts
+  - CHART_DIRECTORY=stable/proctor-service
+  - CHART_VERSION=$TRAVIS_TAG
+  - COMMIT_ID=$TRAVIS_COMMIT
+  - PACKAGE_REPOSITORY=walbertus/proctor-helm-packages
+  - PACKAGE_URL=https://walbertus.github.io/proctor-helm-packages
+  - secure: gzJzTyn8rEnIbJCagpp/4mA+ZtQ/EsNsFabk1Q0sbMQB6ZM8Eg6sUN5hCm9ZdeuDTmIx57SELN3+j4v2WrV5DP0oZatwlKm3mJxcXOi8XK3yRWZjznPWG7ZuPv0Ey1zmWpi041uTV29f+gJaKnTdwDnR4DGo43trRvRBeVWiob5Aws1ap2nxezvccW/SLJ8Xq9h1NRKngloSlLivAndO6HqBv0yoKSnHpQAMVrVsQoBmcuiD0gTMOc2lm7cjR8bsbBxWRTUq+cFdTOefNPqEqPvL9uvafzHGbhXk3eVBIFNMxT8nQW3R20HqxVURphWDt3DUZAe3QeAqRStzoq50bWm7QXZDsWWSsiZZEigxpiIXn3R6JJIbQto9UI1ItSK5HjwhcIOCTqPEyHwetHXvMEA6IDH6qtNv84E5jKkR+8ZY7Jze0UWQcyb4REqzusTLVVRoegpG3uDvi74JtANK0kVVPddyfI6/dtwj/57f6hOqqjPKZWhciTQNhTSuYerTHv+uUVLa4Gv5P+MQ+wlaLRLwlNuTouFIrF1DZ38Ej/1YgwKrvnFYTGWQKKi/4fRnv/eGeTRfGCLNad82ANKmJMLkCvkoyNS2w5aAv2Mvxf0BN39QSY6q4zZl8r4hy3yPElXOsdr7PpyoWLk60RUbs1Tefa6gde0s5uiKJkH2fNw=
+
+deploy:
+  provider: script
+  script: bash deployment/deploy.sh
+  on:
+    branch: master
+    tags: true
