@@ -12,6 +12,10 @@ metadata:
   {{- end }}
 spec:
   template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: {{ include "proctor-service.name" . }}
+        app.kubernetes.io/instance: {{ .Release.Name }}
     spec:
       restartPolicy: Never
       containers:
