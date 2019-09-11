@@ -19,6 +19,7 @@ pod:
 service:
   type: NodePort
   port: 80
+  annotations: {}
 
 ingress:
   enabled: false
