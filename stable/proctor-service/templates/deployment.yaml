@@ -9,12 +9,14 @@ spec:
   replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
-      app.kubernetes.io/name: {{ include "proctor-service.name" . }}-service
+      app.kubernetes.io/name: {{ include "proctor-service.name" . }}
+      app.kubernetes.io/type: service
       app.kubernetes.io/instance: {{ .Release.Name }}
   template:
     metadata:
       labels:
-        app.kubernetes.io/name: {{ include "proctor-service.name" . }}-service
+        app.kubernetes.io/name: {{ include "proctor-service.name" . }}
+        app.kubernetes.io/type: service
         app.kubernetes.io/instance: {{ .Release.Name }}
       annotations:
         checksum/config: {{ include (print $.Template.BasePath "/configmap.yaml") . | sha256sum }}
@@ -65,12 +67,14 @@ spec:
   replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
-      app.kubernetes.io/name: {{ include "proctor-service.name" . }}-worker
+      app.kubernetes.io/name: {{ include "proctor-service.name" . }}
+      app.kubernetes.io/type: worker
       app.kubernetes.io/instance: {{ .Release.Name }}
   template:
     metadata:
       labels:
-        app.kubernetes.io/name: {{ include "proctor-service.name" . }}-worker
+        app.kubernetes.io/name: {{ include "proctor-service.name" . }}
+        app.kubernetes.io/type: worker
         app.kubernetes.io/instance: {{ .Release.Name }}
       annotations:
         checksum/config: {{ include (print $.Template.BasePath "/configmap.yaml") . | sha256sum }}

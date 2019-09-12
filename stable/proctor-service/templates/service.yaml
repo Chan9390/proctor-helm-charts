@@ -17,5 +17,6 @@ spec:
       protocol: TCP
       name: proctor-service
   selector:
-    app.kubernetes.io/name: {{ include "proctor-service.name" . }}-service
+    app.kubernetes.io/name: {{ include "proctor-service.name" . }}
+    app.kubernetes.io/type: service
     app.kubernetes.io/instance: {{ .Release.Name }}
