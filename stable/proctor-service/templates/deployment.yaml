@@ -72,7 +72,7 @@ metadata:
   labels:
 {{ include "proctor-service.labels" . | indent 4 }}
 spec:
-  replicas: {{ .Values.replicaCount }}
+  replicas: 1
   selector:
     matchLabels:
       app.kubernetes.io/name: {{ include "proctor-service.name" . }}
