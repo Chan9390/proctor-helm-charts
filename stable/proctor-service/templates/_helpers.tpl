@@ -31,6 +31,22 @@ Create chart name and version as used by the chart label.
 {{- printf "%s-%s" .Chart.Name .Chart.Version | replace "+" "_" | trunc 63 | trimSuffix "-" -}}
 {{- end -}}
 
+
+Create a default fully qualified app name.
+We truncate at 63 chars because some Kubernetes name fields are limited to this (by the DNS naming spec).
+
+{{- define "postgresql.host" -}}
+{{- printf "%s-%s" .Release.Name "postgresql" | trunc 63 | trimSuffix "-" -}}
+{{- end -}}
+
+
+Create a default fully qualified app name.
+We truncate at 63 chars because some Kubernetes name fields are limited to this (by the DNS naming spec).
+
+{{- define "redis.host" -}}
+{{- printf "%s-%s:6379" .Release.Name "redis-master" | trunc 63 | trimSuffix "-" -}}
+{{- end -}}
+
 {{/*
 Common labels
 */}}
@@ -42,17 +58,6 @@ app.kubernetes.io/instance: {{ .Release.Name }}
 app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
 {{- end }}
 app.kubernetes.io/managed-by: {{ .Release.Service }}
-{{- end -}}
-
-{{/*
-Return the appropriate apiVersion for RBAC APIs.
-*/}}
-{{- define "rbac.apiVersion" -}}
-{{- if semverCompare "^1.8-0" .Capabilities.KubeVersion.GitVersion -}}
-"rbac.authorization.k8s.io/v1"
-{{- else -}}
-"rbac.authorization.k8s.io/v1beta1"
-{{- end -}}
 {{- end -}}
 
 {{/*

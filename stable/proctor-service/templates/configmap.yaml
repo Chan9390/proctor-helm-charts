@@ -10,6 +10,25 @@ metadata:
     {{- toYaml . | nindent 4 }}
   {{- end }}
 data:
+  {{- if .Values.redis.enabled }}
+  PROCTOR_REDIS_ADDRESS: {{ template "redis.host" . }}
+  {{- else }}
+  PROCTOR_REDIS_ADDRESS: {{ .Values.external.redis.address }}
+  {{- end }}
+  {{- if .Values.postgresql.enabled }}
+  PROCTOR_POSTGRES_HOST: {{ template "postgresql.host" . }}
+  PROCTOR_POSTGRES_PORT: "5432"
+  PROCTOR_POSTGRES_USER: {{ .Values.postgresql.postgresqlUsername | quote }}
+  PROCTOR_POSTGRES_PASSWORD: {{ .Values.postgresql.postgresqlPassword | quote }}
+  PROCTOR_POSTGRES_DATABASE: {{ .Values.postgresql.postgresqlDatabase | quote }}
+  {{- else }}
+  PROCTOR_POSTGRES_HOST: {{ .Values.external.postgresql.host }}
+  PROCTOR_POSTGRES_PORT: {{ .Values.external.postgresql.port }}
+  PROCTOR_POSTGRES_USER: {{ .Values.external.postgresql.user }}
+  PROCTOR_POSTGRES_PASSWORD: {{ .Values.external.postgresql.password | quote }}
+  {{- end }}
+  PROCTOR_NEW_RELIC_APP_NAME: {{ .Values.newrelic.appName | quote }}
+  PROCTOR_NEW_RELIC_LICENCE_KEY: {{ .Values.newrelic.license }}
   {{- range $key, $value := .Values.config }}
   {{ $key }}: {{ $value | quote }}
   {{- end }}

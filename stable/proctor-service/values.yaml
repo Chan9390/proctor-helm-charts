@@ -14,7 +14,10 @@ nameOverride: ""
 fullnameOverride: ""
 
 pod:
-  annotations: {}
+  annotations:
+    "helm.sh/hook": post-install
+    "helm.sh/hook-weight": "15"
+    "helm.sh/hook-delete-policy": pre-delete
 
 service:
   type: NodePort
@@ -59,24 +62,48 @@ affinity: {}
 migration:
   enabled : true
   annotations:
-    "helm.sh/hook": pre-install,pre-upgrade
-    "helm.sh/hook-weight": "-5"
+    "helm.sh/hook": post-install
+    "helm.sh/hook-weight": "5"
     "helm.sh/hook-delete-policy": hook-succeeded,before-hook-creation
-
+    
 configmap:
-  annotations:
-    "helm.sh/hook": pre-install,pre-upgrade
-    "helm.sh/hook-weight": "-10"
-    "helm.sh/hook-delete-policy": before-hook-creation
+  annotations: {}
+  
+# https://github.com/helm/charts/blob/master/stable/redis-ha/values.yaml
+redis:
+  enabled: true
+  usePassword: false
 
+# https://github.com/helm/charts/blob/master/stable/postgresql/values.yaml
+postgresql:
+  enabled: true
+  postgresqlUsername: "proctor"
+  postgresqlPassword: "localhost"
+  postgresqlDatabase: "proctor_db"
+
+external:
+  # All this value will be used only when redis.enable is false
+  redis:
+    address: "redis-master:6379"
+  # All this value will be used only when postgresql.enable is false
+  postgresql:
+    user: "postgres"
+    password: "localhost"
+    host: "postgresql"
+    port: "5432"
+    database: "proctord_test"
+
+newrelic:
+  appName: "proctor-service"
+  license: "NPCKXGISLEPMEWKJIYQBHENBQHDUTJHLBWCZAQOK"
+  
 config:
-  ENVIRONMENT: "test"
-  PROCTOR_KUBE_CONFIG: ""
+  PROCTOR_KUBE_CONFIG: "in-cluster"
   PROCTOR_KUBE_CONTEXT: "minikube"
   PROCTOR_LOG_LEVEL: "debug"
   PROCTOR_APP_PORT: "5000"
   PROCTOR_DEFAULT_NAMESPACE: "default"
-  PROCTOR_REDIS_ADDRESS: "redis-master:6379"
+#  PROCTOR_REDIS_ADDRESS: "redis-master:6379"
   PROCTOR_REDIS_MAX_ACTIVE_CONNECTIONS: "10"
   PROCTOR_KUBE_JOB_ACTIVE_DEADLINE_SECONDS: "60"
   PROCTOR_KUBE_JOB_RETRIES: "0"
@@ -88,15 +115,15 @@ config:
   PROCTOR_KUBE_LOG_PROCESS_WAIT_TIME: "60"
   PROCTOR_KUBE_CA_CERT_ENCODED: ""
   PROCTOR_KUBE_BASIC_AUTH_ENCODED: ""
-  PROCTOR_POSTGRES_USER: "postgres"
-  PROCTOR_POSTGRES_PASSWORD: ""
-  PROCTOR_POSTGRES_HOST: "postgresql"
-  PROCTOR_POSTGRES_PORT: "5432"
-  PROCTOR_POSTGRES_DATABASE: "proctord_test"
+#  PROCTOR_POSTGRES_USER: "postgres"
+#  PROCTOR_POSTGRES_PASSWORD: ""
+#  PROCTOR_POSTGRES_HOST: "postgresql"
+#  PROCTOR_POSTGRES_PORT: "5432"
+#  PROCTOR_POSTGRES_DATABASE: "proctord_test"
   PROCTOR_POSTGRES_MAX_CONNECTIONS: "50"
   PROCTOR_POSTGRES_CONNECTIONS_MAX_LIFETIME: "30"
-  PROCTOR_NEW_RELIC_APP_NAME: "PROCTORD"
-  PROCTOR_NEW_RELIC_LICENCE_KEY: "0123456789012345678901234567890123456789"
+#  PROCTOR_NEW_RELIC_APP_NAME: "PROCTORD"
+#  PROCTOR_NEW_RELIC_LICENCE_KEY: "0123456789012345678901234567890123456789"
   PROCTOR_MIN_CLIENT_VERSION: "v2.0.0"
   PROCTOR_SCHEDULED_JOBS_FETCH_INTERVAL_IN_MINS: "5"
   PROCTOR_MAIL_USERNAME: "user@mail.com"
