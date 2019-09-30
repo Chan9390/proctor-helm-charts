@@ -13,7 +13,7 @@ data:
   {{- if .Values.redis.enabled }}
   PROCTOR_REDIS_ADDRESS: {{ template "redis.host" . }}
   {{- else }}
-  PROCTOR_REDIS_ADDRESS: {{ .Values.external.redis.address }}
+  PROCTOR_REDIS_ADDRESS: {{ .Values.external.redis.address | quote }}
   {{- end }}
   {{- if .Values.postgresql.enabled }}
   PROCTOR_POSTGRES_HOST: {{ template "postgresql.host" . }}
@@ -22,14 +22,14 @@ data:
   PROCTOR_POSTGRES_PASSWORD: {{ .Values.postgresql.postgresqlPassword | quote }}
   PROCTOR_POSTGRES_DATABASE: {{ .Values.postgresql.postgresqlDatabase | quote }}
   {{- else }}
-  PROCTOR_POSTGRES_HOST: {{ .Values.external.postgresql.host }}
-  PROCTOR_POSTGRES_PORT: {{ .Values.external.postgresql.port }}
-  PROCTOR_POSTGRES_USER: {{ .Values.external.postgresql.user }}
+  PROCTOR_POSTGRES_HOST: {{ .Values.external.postgresql.host | quote }}
+  PROCTOR_POSTGRES_PORT: {{ .Values.external.postgresql.port | quote }}
+  PROCTOR_POSTGRES_USER: {{ .Values.external.postgresql.user | quote }}
   PROCTOR_POSTGRES_PASSWORD: {{ .Values.external.postgresql.password | quote }}
   PROCTOR_POSTGRES_DATABASE: {{ .Values.external.postgresql.database | quote }}
   {{- end }}
   PROCTOR_NEW_RELIC_APP_NAME: {{ .Values.newrelic.appName | quote }}
-  PROCTOR_NEW_RELIC_LICENCE_KEY: {{ .Values.newrelic.license }}
+  PROCTOR_NEW_RELIC_LICENCE_KEY: {{ .Values.newrelic.license | quote }}
   {{- range $key, $value := .Values.config }}
   {{ $key }}: {{ $value | quote }}
   {{- end }}
