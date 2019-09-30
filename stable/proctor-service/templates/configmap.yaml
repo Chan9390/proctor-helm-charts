@@ -26,6 +26,7 @@ data:
   PROCTOR_POSTGRES_PORT: {{ .Values.external.postgresql.port }}
   PROCTOR_POSTGRES_USER: {{ .Values.external.postgresql.user }}
   PROCTOR_POSTGRES_PASSWORD: {{ .Values.external.postgresql.password | quote }}
+  PROCTOR_POSTGRES_DATABASE: {{ .Values.external.postgresql.database | quote }}
   {{- end }}
   PROCTOR_NEW_RELIC_APP_NAME: {{ .Values.newrelic.appName | quote }}
   PROCTOR_NEW_RELIC_LICENCE_KEY: {{ .Values.newrelic.license }}
