@@ -4,17 +4,17 @@ services:
 env:
   global:
   - GITHUB_ACTOR=proctorbuilder
-  - CHART_REPOSITORY=walbertus/proctor-helm-charts
+  - CHART_REPOSITORY=gopaytech/proctor-helm-charts
   - CHART_DIRECTORY=stable/proctor-service
   - CHART_VERSION=$TRAVIS_TAG
   - COMMIT_ID=$TRAVIS_COMMIT
-  - PACKAGE_REPOSITORY=walbertus/proctor-helm-packages
-  - PACKAGE_URL=https://walbertus.github.io/proctor-helm-packages
+  - PACKAGE_REPOSITORY=gopaytech/proctor-helm-packages
+  - PACKAGE_URL=https://gopaytech.github.io/proctor-helm-packages
   - secure: KKbhr/sBzdqo4ylc+468MQdNVDIWtgptLMBr7/vehdBX3HSfrZWFYQJaBTdc+2jEviWz4AvBNxUFx6ubVcG3lrc4H6s6EK/yTtvBp2meEjXSQ466I782d44/LKOngEkWIxRmJd4Nth8beEsncXChEabt1oW6I9+i/N2eTNTn0xHGMmndcjeRqeAEbFRb/e8DBel1ZICgdSsCFBWr3Ei0KK2yKW5FXeE4nJuuHsTrAHJcLmIrPkA423jdDe61R6lNr7XT6TC+Ta7DU3JptZWeFo7qRo51/7uiWsecW6+HFBoKoubbL+nFNrzKVDIHx8wTjbU/HFPs0tlkxMca7GHIA0kH7HZU3XjuZFaK2n+CvYvEb0PrtXwxPfNNT+aXMKMGhxoSC17J8olVWm1FgkUjcQB/xyVp4vpk7ZY33UgynrQdj9uwLIy9qS7n8Nztnre4QQkRXZ4jkhzVlsSiHm3wzYDU6IeHQrFsHTVi+AXu1BdWFuu+TdS/1oFxwhep/Hs9EZtNdRNy4WSlZ42vr0INTzwTgcZo/pjToy2yqMqqMnOL6zzJG7bBqp0vxPAH1yDMl4nqdHVhZqAPSVFvQUyvL4roaKFXKtB694Zaccot7l11DB0NnJy7Hhp/C78vMSPmi1m6AtNbLGC1jxo6F3jYo9cOe7MnNnavkx144UrSrAY=
 
 deploy:
   provider: script
-  script: bash deployment/deploy.sh
+  script: bash script/deploy.sh
   on:
     branch: master
     tags: true
