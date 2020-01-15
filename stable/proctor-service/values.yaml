@@ -85,6 +85,7 @@ external:
   # All this value will be used only when redis.enable is false
   redis:
     address: "redis-master:6379"
+    password: "foobar"
   # All this value will be used only when postgresql.enable is false
   postgresql:
     user: "postgres"
